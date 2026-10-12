@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230a0a0c'/><text x='32' y='46' font-size='40' text-anchor='middle' fill='%23d01c2a' font-family='serif'>暁</text></svg>" />
+  <title>Akatsuki Pelerini — 暁 Store</title>
+  <meta name="description" content="Itachi Uchiha'nın ikonik Akatsuki pelerini. 3D olarak her detayını inceleyin." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Shippori+Mincho:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link rel="preload" href="/models/akatsuki-coat.glb" as="fetch" crossorigin />
+</head>
+<body>
+  <!-- Yükleme ekranı -->
+  <div id="loader" aria-live="polite">
+    <div class="loader-kanji">暁</div>
+    <div class="loader-bar"><span id="loader-fill"></span></div>
+    <p class="loader-text"><span id="loader-pct">0</span>% · Model yükleniyor</p>
+  </div>
+
+  <canvas id="webgl" aria-label="Akatsuki pelerini 3D modeli"></canvas>
+  <div class="bg-kanji" aria-hidden="true">暁</div>
+  <div id="hotspots" aria-hidden="false"></div>
+
+  <header class="site-header">
+    <a class="logo" href="#hero"><span class="logo-kanji">暁</span> AKATSUKI<small>STORE</small></a>
+    <nav class="nav">
+      <a href="#hero">Ürün</a>
+      <a href="#yaka">Detaylar</a>
+      <a href="#satin-al">Satın Al</a>
+    </nav>
+    <button class="cart-btn" id="cart-open" aria-label="Sepeti aç">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+      <span class="cart-count" id="cart-count">0</span>
+    </button>
+  </header>
+
+  <!-- Scroll ilerleme göstergesi -->
+  <aside class="progress" aria-hidden="true">
+    <ol id="progress-dots"></ol>
+  </aside>
+
+  <main id="story">
+    <section class="panel" id="hero" data-shot="hero" data-label="Ürün">
+      <div class="card card--left hero-card">
+        <p class="eyebrow">Yeni Sezon · Shinobi Koleksiyonu</p>
+        <h1>Akatsuki<br /><span>Pelerini</span></h1>
+        <p class="lead">Itachi Uchiha'nın efsanevi pelerini. Kırmızı bulut motifleri, yüksek yaka ve akışkan kesimiyle her detayı 3D olarak inceleyin.</p>
+        <div class="price-row">
+          <span class="price">₺2.499,90</span>
+          <span class="price-old">₺3.199,00</span>
+          <span class="badge">-%22</span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn--primary" href="#satin-al">Hemen Al</a>
+          <button class="btn btn--ghost" data-explore>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M21 3v6h-6"/></svg>
+            360° İncele
+          </button>
+        </div>
+        <p class="scroll-hint"><span></span>Detayları görmek için kaydırın</p>
+      </div>
+    </section>
+
+    <section class="panel" id="yaka" data-shot="collar" data-label="Yaka">
+      <div class="card card--right">
+        <p class="eyebrow">01 · Detay</p>
+        <h2>Yüksek Yaka</h2>
+        <p>Yüzün alt kısmını saran dik yaka, pelerinin en tanınan siluetini oluşturur. Çift katlı astar sayesinde formunu kaybetmez.</p>
+        <ul class="specs"><li><b>Yükseklik</b> 14 cm</li><li><b>Astar</b> Kırmızı saten</li></ul>
+      </div>
+    </section>
+
+    <section class="panel" id="bulut" data-shot="cloud" data-label="Bulut">
+      <div class="card card--left">
+        <p class="eyebrow">02 · Detay</p>
+        <h2>Kırmızı Bulut Motifi</h2>
+        <p>Beyaz kontürlü kızıl bulutlar, Akatsuki'nin imzası. Motifler baskı değil; kenarları dikişle sabitlenmiş aplike işlemedir.</p>
+        <ul class="specs"><li><b>Teknik</b> Aplike nakış</li><li><b>Motif sayısı</b> 10+</li></ul>
+      </div>
+    </section>
+
+    <section class="panel" id="kol" data-shot="sleeve" data-label="Kollar">
+      <div class="card card--right">
+        <p class="eyebrow">03 · Detay</p>
+        <h2>Geniş Kollar &amp; Manşet</h2>
+        <p>Hareket özgürlüğü için geniş kesilmiş kollar, bileğe doğru hafifçe daralır. İç kısımda kırmızı astar görünür.</p>
+        <ul class="specs"><li><b>Kesim</b> Kimono kol</li><li><b>Manşet</b> Katlanabilir</li></ul>
+      </div>
+    </section>
+
+    <section class="panel" id="arka" data-shot="back" data-label="Arka">
+      <div class="card card--left">
+        <p class="eyebrow">04 · Detay</p>
+        <h2>Arka Görünüm</h2>
+        <p>Sırttaki büyük bulut kompozisyonu ve dizlere kadar inen etek boyu, yürürken dramatik bir dalga hareketi yaratır.</p>
+        <ul class="specs"><li><b>Boy</b> Diz altı</li><li><b>Yırtmaç</b> Arka orta</li></ul>
+      </div>
+    </section>
+
+    <section class="panel" id="kumas" data-shot="fabric" data-label="Kumaş">
+      <div class="card card--right">
+        <p class="eyebrow">05 · Malzeme</p>
+        <h2>Kumaş Dokusu</h2>
+        <p>Mat siyah gabardin, ışığı yutar; kırmızı motifler ise hafif saten parlaklığıyla öne çıkar. Yakından bakın: dokuma ve dikiş izleri bile görünür.</p>
+        <ul class="specs"><li><b>Dış</b> %65 Polyester, %35 Pamuk</li><li><b>Gramaj</b> 280 g/m²</li></ul>
+      </div>
+    </section>
+
+    <section class="panel panel--shop" id="satin-al" data-shot="shop" data-label="Satın Al">
+      <div class="shop">
+        <p class="eyebrow">Akatsuki Store</p>
+        <h2>Akatsuki Pelerini — Itachi Edition</h2>
+        <div class="rating" aria-label="5 üzerinden 4,9 puan">
+          <span class="stars">★★★★★</span> 4,9 <a href="#" class="muted">(128 değerlendirme)</a>
+        </div>
+        <div class="price-row">
+          <span class="price">₺2.499,90</span>
+          <span class="price-old">₺3.199,00</span>
+          <span class="badge">-%22</span>
+        </div>
+
+        <div class="field">
+          <div class="field-head"><span>Beden: <b id="size-label">Seçilmedi</b></span><button class="link" id="size-guide-open">Beden tablosu</button></div>
+          <div class="sizes" id="sizes" role="radiogroup" aria-label="Beden">
+            <button role="radio" data-size="XS" disabled title="Tükendi">XS</button>
+            <button role="radio" data-size="S">S</button>
+            <button role="radio" data-size="M">M</button>
+            <button role="radio" data-size="L">L</button>
+            <button role="radio" data-size="XL">XL</button>
+            <button role="radio" data-size="XXL">XXL</button>
+          </div>
+          <p class="field-error" id="size-error" hidden>Lütfen bir beden seçin.</p>
+        </div>
+
+        <div class="buy-row">
+          <div class="qty" aria-label="Adet">
+            <button id="qty-minus" aria-label="Azalt">−</button>
+            <input id="qty" type="number" min="1" max="10" value="1" inputmode="numeric" aria-label="Adet" />
+            <button id="qty-plus" aria-label="Arttır">+</button>
+          </div>
+          <button class="btn btn--primary btn--block" id="add-to-cart">Sepete Ekle</button>
+        </div>
+        <button class="btn btn--ghost btn--block" data-explore>360° Serbest İncele</button>
+
+        <ul class="perks">
+          <li>🚚 750₺ üzeri ücretsiz kargo</li>
+          <li>↩️ 30 gün içinde kolay iade</li>
+          <li>🔒 Güvenli ödeme</li>
+        </ul>
+
+        <div class="accordion">
+          <details open>
+            <summary>Ürün Özellikleri</summary>
+            <ul>
+              <li>Dik, çift katlı yüksek yaka</li>
+              <li>Aplike kırmızı bulut motifleri</li>
+              <li>Kırmızı saten iç astar</li>
+              <li>Gizli çıtçıt kapama</li>
+            </ul>
+          </details>
+          <details>
+            <summary>Kumaş &amp; Bakım</summary>
+            <p>Dış kumaş: %65 polyester, %35 pamuk gabardin. Astar: %100 polyester saten. 30°C'de tersten yıkayın, çamaşır suyu kullanmayın, düşük ısıda ütüleyin.</p>
+          </details>
+          <details>
+            <summary>Kargo &amp; İade</summary>
+            <p>Siparişler 1–3 iş günü içinde kargoya verilir. Ürünü teslim aldıktan sonra 30 gün içinde ücretsiz iade edebilirsiniz.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-brand"><span class="logo-kanji">暁</span> Akatsuki Store <span class="muted">· Demo mağaza</span></div>
+    <p class="credit">
+      3D model: <a href="https://sketchfab.com/3d-models/akatsuki-coat-itachis-clothes-9871bf23b8a04d30a0a9b9731bae1d14" target="_blank" rel="noopener">"Akatsuki coat - Itachi's clothes"</a>
+      — <a href="https://sketchfab.com/marc.edouard.lepine17" target="_blank" rel="noopener">Marc Ed</a>,
+      <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC-BY-4.0</a> lisansıyla.
+      Normal ve AO haritaları bu site için üretilmiştir.
+    </p>
+  </footer>
+
+  <!-- Serbest inceleme modu -->
+  <div class="explore-ui" id="explore-ui" hidden>
+    <p>Döndürmek için sürükleyin · Yakınlaştırmak için kaydırın</p>
+    <button class="btn btn--primary" id="explore-close">Kapat <kbd>Esc</kbd></button>
+  </div>
+
+  <!-- Sepet çekmecesi -->
+  <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+  <aside class="drawer" id="cart-drawer" aria-label="Sepet" aria-hidden="true">
+    <div class="drawer-head">
+      <h3>Sepetim</h3>
+      <button class="icon-btn" id="cart-close" aria-label="Kapat">✕</button>
+    </div>
+    <ul class="cart-items" id="cart-items"></ul>
+    <p class="cart-empty" id="cart-empty">Sepetiniz boş.</p>
+    <div class="drawer-foot">
+      <div class="total-row"><span>Ara toplam</span><b id="cart-total">₺0,00</b></div>
+      <p class="muted small" id="shipping-note"></p>
+      <button class="btn btn--primary btn--block" id="checkout">Ödemeye Geç</button>
+    </div>
+  </aside>
+
+  <!-- Beden tablosu -->
+  <dialog id="size-guide">
+    <div class="dialog-head"><h3>Beden Tablosu (cm)</h3><button class="icon-btn" id="size-guide-close" aria-label="Kapat">✕</button></div>
+    <table>
+      <thead><tr><th>Beden</th><th>Göğüs</th><th>Omuz</th><th>Boy</th><th>Kol</th></tr></thead>
+      <tbody>
+        <tr><td>XS</td><td>100</td><td>44</td><td>110</td><td>60</td></tr>
+        <tr><td>S</td><td>106</td><td>46</td><td>114</td><td>61</td></tr>
+        <tr><td>M</td><td>112</td><td>48</td><td>118</td><td>62</td></tr>
+        <tr><td>L</td><td>118</td><td>50</td><td>122</td><td>63</td></tr>
+        <tr><td>XL</td><td>124</td><td>52</td><td>126</td><td>64</td></tr>
+        <tr><td>XXL</td><td>130</td><td>54</td><td>130</td><td>65</td></tr>
+      </tbody>
+    </table>
+    <p class="muted small">Bol kesimdir; vücut ölçünüze göre normal bedeninizi seçmeniz önerilir.</p>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
